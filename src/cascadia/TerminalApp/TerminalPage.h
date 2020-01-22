@@ -37,6 +37,8 @@ namespace winrt::TerminalApp::implementation
         Windows::Foundation::Collections::IObservableVector<TerminalApp::ConvertedTab> ConvertedTabs();
         void ConvertedTabs(const Windows::Foundation::Collections::IObservableVector<TerminalApp::ConvertedTab>& val);
 
+        void _OnViewLoaded(const IInspectable& /*sender*/, const IInspectable& /*sender*/);
+
         // -------------------------------- WinRT Events ---------------------------------
         DECLARE_EVENT_WITH_TYPED_EVENT_HANDLER(TitleChanged, _titleChangeHandlers, winrt::Windows::Foundation::IInspectable, winrt::hstring);
         DECLARE_EVENT_WITH_TYPED_EVENT_HANDLER(LastTabClosed, _lastTabClosedHandlers, winrt::Windows::Foundation::IInspectable, winrt::TerminalApp::LastTabClosedEventArgs);
@@ -57,7 +59,7 @@ namespace winrt::TerminalApp::implementation
 
         std::shared_ptr<::TerminalApp::CascadiaSettings> _settings{ nullptr };
 
-        Windows::Foundation::Collections::IObservableVector<TerminalApp::ConvertedTab> _ConvertedTabs;
+        Windows::Foundation::Collections::IObservableVector<winrt::TerminalApp::ConvertedTab> _ConvertedTabs;
 
         bool _isFullscreen{ false };
 

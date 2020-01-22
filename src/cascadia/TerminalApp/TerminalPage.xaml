@@ -15,7 +15,7 @@ the MIT License. See LICENSE in the project root for license information. -->
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
+        
         <mux:TabView x:Name="TabView"
                  Grid.Row="0"
                  VerticalAlignment="Bottom"
@@ -25,10 +25,10 @@ the MIT License. See LICENSE in the project root for license information. -->
                  CanReorderTabs="True"
                  CanDragTabs="True"
                  AllowDropTabs="True"
-                 TabItemsSource="{x:Bind ConvertedTabs, Mode=TwoWay}">
+                 TabItemsSource="{x:Bind ConvertedTabs, Mode=OneWay}">
             <mux:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="local:ConvertedTab">
-                    <mux:TabViewItem Header="{x:Bind Title, Mode=OneWay}" IconSource="{x:Bind IconPath, Mode=OneWay}"/>
+                    <mux:TabViewItem Header="{x:Bind Title, Mode=OneWay}"/>
                 </DataTemplate>
             </mux:TabView.TabItemTemplate>
 

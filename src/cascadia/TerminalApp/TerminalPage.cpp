@@ -37,10 +37,10 @@ namespace winrt
 
 namespace winrt::TerminalApp::implementation
 {
-    TerminalPage::TerminalPage():
-        _ConvertedTabs{ winrt::single_threaded_observable_vector<winrt::TerminalApp::ConvertedTab>() }
+    TerminalPage::TerminalPage()
     {
         InitializeComponent();
+        _ConvertedTabs = winrt::single_threaded_observable_vector<winrt::TerminalApp::ConvertedTab>();
     }
 
     Windows::Foundation::Collections::IObservableVector<winrt::TerminalApp::ConvertedTab> TerminalPage::ConvertedTabs()
@@ -77,11 +77,9 @@ namespace winrt::TerminalApp::implementation
 
         _tabContent = this->TabContent();
         _tabView = this->TabView();
-        //_rearranging = false;
         _newTabButton = this->NewTabButton();
 
-        auto source = _tabView.TabItemsSource();
-        
+        //_rearranging = false;
 
         // TODO: Does Tab Dragging need to be handled like this?
         //_tabView.TabDragStarting([weakThis](auto&& /*o*/, auto&& /*a*/) {
@@ -139,11 +137,18 @@ namespace winrt::TerminalApp::implementation
         _tabView.SelectionChanged({ this, &TerminalPage::_OnTabSelectionChanged });
         _tabView.TabCloseRequested({ this, &TerminalPage::_OnTabCloseRequested });
         _tabView.TabItemsChanged({ this, &TerminalPage::_OnTabItemsChanged });
+        _tabView.Loaded({ this, &TerminalPage::_OnViewLoaded });
 
-        _CreateNewTabFlyout();
-        _OpenNewTab(nullptr);
+        //_CreateNewTabFlyout();
+        //_OpenNewTab(nullptr);
 
         _tabContent.SizeChanged({ this, &TerminalPage::_OnContentSizeChanged });
+    }
+
+    void TerminalPage::_OnViewLoaded(const IInspectable& /*sender*/, const IInspectable& /*sender*/)
+    {
+        _CreateNewTabFlyout();
+        _OpenNewTab(nullptr);
     }
 
     // Method Description:
@@ -463,6 +468,12 @@ namespace winrt::TerminalApp::implementation
         auto newTabProjection = winrt::make<ConvertedTab>(profileGuid, term);
         auto newTabImpl = winrt::get_self<implementation::ConvertedTab>(newTabProjection);
         _ConvertedTabs.Append(newTabProjection);
+
+        auto siz = TabView().TabItems().Size();
+        if (siz == 1)
+        {
+            siz = 1;
+        }
 
         // Hookup our event handlers to the new terminal
         _RegisterTerminalEvents(term, newTabProjection);
@@ -883,7 +894,8 @@ namespace winrt::TerminalApp::implementation
 
     winrt::Microsoft::Terminal::TerminalControl::TermControl TerminalPage::_GetActiveControl()
     {
-        int focusedTabIndex = _GetFocusedTabIndex();
+        //int focusedTabIndex = _GetFocusedTabIndex();
+        int focusedTabIndex = _tabView.SelectedIndex();
         auto focusedTab = winrt::get_self<implementation::ConvertedTab>(_ConvertedTabs.GetAt(focusedTabIndex));
         return focusedTab->GetActiveTerminalControl();
     }
