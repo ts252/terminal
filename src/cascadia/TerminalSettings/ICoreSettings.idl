@@ -33,6 +33,7 @@ namespace Microsoft.Terminal.Settings
         Boolean SuppressApplicationTitle;
         String WordDelimiters;
         Boolean CopyOnSelect;
+        Boolean MiddleButtonPaste;
     };
 
 }

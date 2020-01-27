@@ -32,6 +32,7 @@ static constexpr std::wstring_view TitleLengthTabWidthModeValue{ L"titleLength" 
 static constexpr std::string_view ShowTabsInTitlebarKey{ "showTabsInTitlebar" };
 static constexpr std::string_view WordDelimitersKey{ "wordDelimiters" };
 static constexpr std::string_view CopyOnSelectKey{ "copyOnSelect" };
+static constexpr std::string_view MiddleButtonPasteKey{ "middleButtonPaste" };
 static constexpr std::string_view LaunchModeKey{ "launchMode" };
 static constexpr std::string_view SnapToGridOnResizeKey{ "snapToGridOnResize" };
 static constexpr std::wstring_view DefaultLaunchModeValue{ L"default" };
@@ -56,6 +57,7 @@ GlobalAppSettings::GlobalAppSettings() :
     _tabWidthMode{ TabViewWidthMode::Equal },
     _wordDelimiters{ DEFAULT_WORD_DELIMITERS },
     _copyOnSelect{ false },
+    _middleButtonPaste{ false },
     _launchMode{ LaunchMode::DefaultMode }
 {
 }
@@ -149,6 +151,17 @@ void GlobalAppSettings::SetCopyOnSelect(const bool copyOnSelect) noexcept
     _copyOnSelect = copyOnSelect;
 }
 
+bool GlobalAppSettings::GetMiddleButtonPaste() const noexcept
+{
+    return _middleButtonPaste;
+}
+
+void GlobalAppSettings::SetMiddleButtonPaste(const bool middleButtonPaste) noexcept
+{
+    _middleButtonPaste = middleButtonPaste;
+}
+
+
 LaunchMode GlobalAppSettings::GetLaunchMode() const noexcept
 {
     return _launchMode;
@@ -197,6 +210,7 @@ void GlobalAppSettings::ApplyToSettings(TerminalSettings& settings) const noexce
 
     settings.WordDelimiters(_wordDelimiters);
     settings.CopyOnSelect(_copyOnSelect);
+    settings.MiddleButtonPaste(_middleButtonPaste);
 }
 
 // Method Description:
@@ -219,6 +233,7 @@ Json::Value GlobalAppSettings::ToJson() const
     jsonObject[JsonKey(ShowTabsInTitlebarKey)] = _showTabsInTitlebar;
     jsonObject[JsonKey(WordDelimitersKey)] = winrt::to_string(_wordDelimiters);
     jsonObject[JsonKey(CopyOnSelectKey)] = _copyOnSelect;
+    jsonObject[JsonKey(MiddleButtonPasteKey)] = _middleButtonPaste;
     jsonObject[JsonKey(LaunchModeKey)] = winrt::to_string(_SerializeLaunchMode(_launchMode));
     jsonObject[JsonKey(RequestedThemeKey)] = winrt::to_string(_SerializeTheme(_requestedTheme));
     jsonObject[JsonKey(TabWidthModeKey)] = winrt::to_string(_SerializeTabWidthMode(_tabWidthMode));
@@ -296,6 +311,12 @@ void GlobalAppSettings::LayerJson(const Json::Value& json)
     {
         _copyOnSelect = copyOnSelect.asBool();
     }
+
+    if (auto middleButtonPaste{ json[JsonKey(MiddleButtonPasteKey)] })
+    {
+        _middleButtonPaste = middleButtonPaste.asBool();
+    }
+
 
     if (auto launchMode{ json[JsonKey(LaunchModeKey)] })
     {

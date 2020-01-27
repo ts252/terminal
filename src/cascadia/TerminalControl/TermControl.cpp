@@ -932,12 +932,13 @@ namespace winrt::Microsoft::Terminal::TerminalControl::implementation
                 }
                 _renderer->TriggerSelection();
             }
-            else if (point.Properties().IsRightButtonPressed())
+            else if (point.Properties().IsRightButtonPressed() ||
+                     point.Properties().IsMiddleButtonPressed() && _settings.MiddleButtonPaste())
             {
-                // copyOnSelect causes right-click to always paste
+                // copyOnSelect causes right-click (or middle-click) to always paste
                 if (_terminal->IsCopyOnSelectActive() || !_terminal->IsSelectionActive())
                 {
-                    PasteTextFromClipboard();
+                    PasteTextFromClipboard();                    
                 }
                 else
                 {

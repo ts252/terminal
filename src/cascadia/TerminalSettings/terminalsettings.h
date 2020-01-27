@@ -67,6 +67,10 @@ namespace winrt::Microsoft::Terminal::Settings::implementation
         int32_t FontSize() noexcept;
         void FontSize(int32_t value) noexcept;
 
+        bool MiddleButtonPaste();
+        void MiddleButtonPaste(bool value);
+
+
         hstring BackgroundImage();
         void BackgroundImage(hstring const& value);
         double BackgroundImageOpacity() noexcept;
@@ -128,6 +132,7 @@ namespace winrt::Microsoft::Terminal::Settings::implementation
         winrt::Windows::UI::Xaml::HorizontalAlignment _backgroundImageHorizontalAlignment;
         winrt::Windows::UI::Xaml::VerticalAlignment _backgroundImageVerticalAlignment;
         bool _copyOnSelect;
+        bool _middleButtonPaste;
         hstring _commandline;
         hstring _startingDir;
         hstring _startingTitle;

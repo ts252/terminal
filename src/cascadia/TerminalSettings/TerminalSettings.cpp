@@ -194,7 +194,17 @@ namespace winrt::Microsoft::Terminal::Settings::implementation
         _copyOnSelect = value;
     }
 
-    bool TerminalSettings::UseAcrylic() noexcept
+    bool TerminalSettings::MiddleButtonPaste()
+    {
+        return _middleButtonPaste;
+    }
+
+    void TerminalSettings::MiddleButtonPaste(bool value)
+    {
+        _middleButtonPaste = value;
+    }
+
+    bool TerminalSettings::UseAcrylic()
     {
         return _useAcrylic;
     }
