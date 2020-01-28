@@ -67,9 +67,8 @@ namespace winrt::Microsoft::Terminal::Settings::implementation
         int32_t FontSize() noexcept;
         void FontSize(int32_t value) noexcept;
 
-        bool MiddleButtonPaste();
-        void MiddleButtonPaste(bool value);
-
+        bool MiddleButtonPaste() noexcept;
+        void MiddleButtonPaste(bool value) noexcept;
 
         hstring BackgroundImage();
         void BackgroundImage(hstring const& value);

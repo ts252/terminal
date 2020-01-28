@@ -195,12 +195,12 @@ namespace winrt::Microsoft::Terminal::Settings::implementation
         _copyOnSelect = value;
     }
 
-    bool TerminalSettings::MiddleButtonPaste()
+    bool TerminalSettings::MiddleButtonPaste() noexcept
     {
         return _middleButtonPaste;
     }
 
-    void TerminalSettings::MiddleButtonPaste(bool value)
+    void TerminalSettings::MiddleButtonPaste(bool value) noexcept
     {
         _middleButtonPaste = value;
     }
