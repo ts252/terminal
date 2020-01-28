@@ -28,6 +28,7 @@ namespace winrt::Microsoft::Terminal::Settings::implementation
         _cursorHeight{ DEFAULT_CURSOR_HEIGHT },
         _wordDelimiters{ DEFAULT_WORD_DELIMITERS },
         _copyOnSelect{ false },
+        _middleButtonPaste{ false },
         _useAcrylic{ false },
         _tintOpacity{ 0.5 },
         _padding{ DEFAULT_PADDING },
